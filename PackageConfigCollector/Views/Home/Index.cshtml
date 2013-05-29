@@ -1,0 +1,51 @@
+﻿@model dynamic
+
+@{
+    ViewBag.Title = "NuGet Packages Config Collector";
+    Layout = "~/Views/shared/_BootstrapLayout.narrow.cshtml";
+}
+
+      <div class="jumbotron">
+        <h1>Contribute to the NuGet Intern Project!</h1>
+        <p class="lead">
+            Some NuGet interns are working on a project where they will analyze what NuGet packages are used "in the wild" and in what combinations.
+            The hope is to create an algorithm for identifying "suggested" packages based on the packages you have installed.
+        </p>
+        <p class="lead">
+            We just need you to upload some packages.config files from your projects. We greatly appreciate it!
+        </p>
+        <form action="/" method="post" id="uploadForm" enctype="multipart/form-data">
+            <div>
+                <input type="file" id="packagesConfig" name="packagesConfig" multiple="multiple" style="width:100%" />
+            </div>
+        </form>
+        <div class="alert-error">
+            @Html.ValidationSummary()
+        </div>
+        <a class="btn btn-large btn-success" href="javascript:void($('#uploadForm')[0].submit());">Contribute my packages.config</a>
+        <h3>@ViewBag.Message</h3>
+      </div>
+
+      <hr>
+
+      <div class="row-fluid marketing">
+        <div class="span6">
+          <h4>What's the point?</h4>
+          <p>The primary objective is to provide the 3 interns on the project with a valuable project they can complete in about 9 weeks.</p>
+          <p>The secondary objective is to experiment with a feature along the lines of "developers who installed these packages also typically install these other packages."</p>
+
+          <h4>How is my packages.config used?</h4>
+          <p>We are collecting packages.config files to build a database of packages being actively used together. Your packages.config files will be added into that collection.</p>
+        </div>
+
+        <div class="span6">
+          <h4>Why not use stats from NuGet.org?</h4>
+          <p>While there's a lot of value in the download statistics on NuGet.org, that data doesn't represent which packages are actively used <i>together</i>.</p>
+
+          <h4>Will I see the results of the project?</h4>
+          <p>We hope so! If the project is a success, we'll blog about the results at <a href="http://blog.nuget.org">blog.nuget.org</a>.</p>
+
+          <h4>Is this confidential?</h4>
+          <p>No. Please don't upload any sensitive information. You should only upload packages.config files that reference only packages from nuget.org.</p>
+        </div>
+      </div>
