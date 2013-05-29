@@ -14,7 +14,7 @@
         <p class="lead">
             We just need you to upload some packages.config files from your projects. We greatly appreciate it!
         </p>
-        <form action="/" method="post" id="uploadForm" enctype="multipart/form-data">
+        <form action="/" method="post" id="uploadForm" name="uploadForm" enctype="multipart/form-data">
             <div>
                 <input type="file" id="packagesConfig" name="packagesConfig" multiple="multiple" style="width:100%" />
             </div>
@@ -22,7 +22,7 @@
         <div class="alert-error">
             @Html.ValidationSummary()
         </div>
-        <a class="btn btn-large btn-success" href="javascript:void($('#uploadForm')[0].submit());">Contribute my packages.config</a>
+        <a class="btn btn-large btn-success" href="javascript:void(document.forms['uploadForm'].submit());">Contribute my packages.config</a>
         <h3>@ViewBag.Message</h3>
       </div>
 
