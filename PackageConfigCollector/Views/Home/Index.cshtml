@@ -24,6 +24,7 @@
         </div>
         <a class="btn btn-large btn-success" href="javascript:void(document.forms['uploadForm'].submit());">Contribute my packages.config</a>
         <h3>@ViewBag.Message</h3>
+        <h4>@ViewBag.ConfigCount.ToString("G") packages.config files contributed so far, which is @((((double)ViewBag.ConfigCount) / 1000.0).ToString("P0")) of goal</h4>
       </div>
 
       <hr>

@@ -12,8 +12,16 @@ namespace BootstrapMvcSample.Controllers
 {
     public class HomeController : BootstrapBaseController
     {
+        [OutputCache(Duration = 60)]
         public ActionResult Index()
         {
+            var connectionString = ConfigurationManager.AppSettings["BlobConnectionString"];
+            var account = CloudStorageAccount.Parse(connectionString);
+            var client = account.CreateCloudBlobClient();
+            var container = client.GetContainerReference("configfiles");
+            container.CreateIfNotExists();
+
+            ViewBag.ConfigCount = container.ListBlobs().Count();
             return View();
         }
 
@@ -21,21 +29,18 @@ namespace BootstrapMvcSample.Controllers
         [AcceptVerbs(HttpVerbs.Post)]
         public ActionResult Index(IEnumerable<HttpPostedFileBase> packagesConfig)
         {
+            var connectionString = ConfigurationManager.AppSettings["BlobConnectionString"];
+            var account = CloudStorageAccount.Parse(connectionString);
+            var client = account.CreateCloudBlobClient();
+            var container = client.GetContainerReference("configfiles");
+            container.CreateIfNotExists();
+
             if (packagesConfig == null || !packagesConfig.Any(f => f != null))
             {
                 ModelState.AddModelError("", "Please select a packages.config file");
             }
             else
             {
-                var connectionString = ConfigurationManager.AppSettings["BlobConnectionString"];
-                var account = CloudStorageAccount.Parse(connectionString);
-                var client = account.CreateCloudBlobClient();
-                var container = client.GetContainerReference("configfiles");
-                container.CreateIfNotExists();
-
-                var permissions = new BlobContainerPermissions { PublicAccess = BlobContainerPublicAccessType.Off };
-                container.SetPermissions(permissions);
-
                 foreach (var file in packagesConfig.Where(f => f != null))
                 {
                     var fileName = Path.GetFileName(file.FileName);
@@ -64,6 +69,7 @@ namespace BootstrapMvcSample.Controllers
                 ViewBag.Message = "Thanks! Feel free to upload more packages.config files!";
             }
 
+            ViewBag.ConfigCount = container.ListBlobs().Count();
             return View();
         }
     }
