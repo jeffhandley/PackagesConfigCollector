@@ -16,7 +16,11 @@
         </p>
         <form action="/" method="post" id="uploadForm" name="uploadForm" enctype="multipart/form-data">
             <div>
-                <input type="file" id="packagesConfig" name="packagesConfig" multiple="multiple" style="width:100%" />
+                <input type="file" id="packagesConfig" name="packagesConfig" multiple="multiple" style="width:100%; background-color:silver; border: 1px solid black;" />
+            </div>
+            <div>
+                Tip: Select multiple files at once.<br />
+                Tip: Using Chrome, you can drag and drop files here.
             </div>
         </form>
         <div class="alert-error">
@@ -24,7 +28,9 @@
         </div>
         <a class="btn btn-large btn-success" href="javascript:void(document.forms['uploadForm'].submit());">Contribute my packages.config</a>
         <h3>@ViewBag.Message</h3>
-        <h4>@ViewBag.ConfigCount.ToString("G") packages.config files contributed so far, which is @((((double)ViewBag.ConfigCount) / 1000.0).ToString("P0")) of goal</h4>
+        @if(ViewBag.ConfigCount != null) {
+            <h4>@ViewBag.ConfigCount.ToString("G") packages.config files contributed so far, which is @((((double)ViewBag.ConfigCount) / 1000.0).ToString("P0")) of goal</h4>
+        }
       </div>
 
       <hr>

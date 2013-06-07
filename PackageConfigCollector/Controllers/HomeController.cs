@@ -16,12 +16,17 @@ namespace BootstrapMvcSample.Controllers
         public ActionResult Index()
         {
             var connectionString = ConfigurationManager.AppSettings["BlobConnectionString"];
-            var account = CloudStorageAccount.Parse(connectionString);
-            var client = account.CreateCloudBlobClient();
-            var container = client.GetContainerReference("configfiles");
-            container.CreateIfNotExists();
 
-            ViewBag.ConfigCount = container.ListBlobs().Count();
+            if (!string.IsNullOrEmpty(connectionString))
+            {
+                var account = CloudStorageAccount.Parse(connectionString);
+                var client = account.CreateCloudBlobClient();
+                var container = client.GetContainerReference("configfiles");
+                container.CreateIfNotExists();
+
+                ViewBag.ConfigCount = container.ListBlobs().Count();
+            }
+
             return View();
         }
 
